@@ -76,7 +76,7 @@ class User(db.Model, UserMixin):
 
 
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    posts = db.relationship('Posts', backref='author', lazy='dynamic')
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
 
     def __init__(self, **kwargs):
@@ -89,8 +89,8 @@ class User(db.Model, UserMixin):
 
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = hashlib.md5(
-                self.email.encode('utf-8').hexdigest()
-            )
+                self.email.encode('utf-8')
+            ).hexdigest()
 
     @property
     def password(self):

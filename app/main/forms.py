@@ -6,6 +6,7 @@ created by: Shenhengheng on 2017/6/4
 from flask_wtf import FlaskForm
 from wtforms import SubmitField,StringField, TextAreaField
 from wtforms.validators import Required,Length
+from flask_pagedown.fields import PageDownField
 
 class NameForm(FlaskForm):
     name = StringField(label="What's your name?", validators=[Required()])
@@ -19,5 +20,6 @@ class EditProfileForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class PostForm(FlaskForm):
-    body = TextAreaField("What's on your mind?", validators=[Required()])
+    body = PageDownField("What's on your mind?", validators=[Required()])
+
     submit = SubmitField('Submit')
