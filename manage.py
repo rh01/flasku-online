@@ -25,7 +25,17 @@ def test():
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(test=tests)
 
+@manager.command
+def deploy():
+    """RUN deployment tasks"""
+    from flask_migrate import upgrade
+    from app.models import Role, User
 
+    # migration
+    upgrade()
+    # create roles of user
+    Role.insert_roles()
+    #
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command("db", MigrateCommand)
