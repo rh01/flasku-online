@@ -6,13 +6,22 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string!'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    MAIL_SERVER = 'smtp.163.com'
+    MAIL_PORT = '465'
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
+    FLASKY_MAIL_SENDER = 'Flasky Admin <m18317774480@163.com>'
+    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    FLASKY_POSTS_PER_PAGE = 20
+    FLASKY_FOLLOWERS_PER_PAGE = 50
+    FLASKY_COMMENTS_PER_PAGE = 20
 
-    SQLALCHEMY_TRACK_MODIFICATIONS= True
-    FLASKY_MAIL_SUBJECT_PREFIX = '[FLASKY]'
-    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN') or 'heng960509@gamil.com'
-    FLASKY_MAIL_SENDER = os.environ.get('FALASKY_MAIL_SENDER') or 'Flasky Admin <heng960509@gmail.com>'
 
     @staticmethod
     def init_app():
@@ -20,24 +29,31 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    MAIL_SERVER = 'smtp.gmail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MIAL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATAVASE_URL') or\
-                              'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
-
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:hadoop@127.0.0.1:3306/flasky'
 
 class TestingConfig(Config):
     TESTING = True
-
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATAVASE_URL') or \
-                              'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:hadoop@127.0.0.1:3306/flasky_test'
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATAVASE_URL') or \
-                              'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:hadoop@127.0.0.1:3306/flasky_product'
+
+# class DevelopmentConfig(Config):
+#
+#
+#     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATAVASE_URL') or\
+#                               'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+#
+#
+# class TestingConfig(Config):
+#     TESTING = True
+#
+#     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATAVASE_URL') or \
+#                               'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+#
+# class ProductionConfig(Config):
+#     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATAVASE_URL') or \
+#                               'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
 
 
 config = {
